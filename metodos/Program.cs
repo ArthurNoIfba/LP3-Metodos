@@ -29,9 +29,21 @@ app.MapGet("/", () =>
 
 app.MapPost("/funcionario", (JsonElement body) =>
 {
-    
-});
+    Funcionario funcionario = new Funcionario();
 
+    funcionario.Nome = body.GetProperty("nome").GetString();
+
+    Console.WriteLine(funcionario.Nome);
+
+    funcionarios[totalFuncionarios] = funcionario;
+    totalFuncionarios++;
+
+    return Results.Ok( new {
+    funcionario
+        }
+    );
+});
+/*
 app.MapGet("/funcionario", () =>
 {
     
@@ -61,5 +73,5 @@ app.MapGet("/funcionario/busca", (string nome) =>
 {
    
 });
-
+*/
 app.Run();
