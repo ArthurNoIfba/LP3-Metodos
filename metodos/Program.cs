@@ -48,16 +48,45 @@ app.MapPost("/funcionario", (JsonElement body) =>
         }
     );
 });
-/*
+
 app.MapGet("/funcionario", () =>
 {
-    
-});
+    Funcionario[] funcionariosCadastrados = new Funcionario[totalFuncionarios];
 
+    for (int i = 0; i < totalFuncionarios; i++)
+    {
+        funcionariosCadastrados[i] = listaFuncionarios[i];
+    }
+
+    return Results.Ok(new
+    {
+        funcionariosCadastrados
+    });
+});
 app.MapPatch("/funcionario/{id}", (int id, JsonElement body) =>
 {
-    
+    double novo_salario = body.GetProperty("salario").GetDouble();
+
+    for (int i = 0; i < totalFuncionarios; i++)
+    {
+        if (listaFuncionarios[i].Id == id)
+        {
+            listaFuncionarios[i].Salario = novo_salario;
+            return Results.Ok(
+                new
+                {
+                    funcionario = listaFuncionarios[i]
+                }
+            );
+        }
+    }
+
+    return Results.NotFound(new
+    {
+        message = "Funcionário não encontrado."
+    });
 });
+/*
 
 app.MapPut("/funcionario/{id}", (int id, JsonElement body) =>
 {   
